@@ -5,7 +5,7 @@ class Config:
         # API 模型的配置
         self.use_api_model = True # 控制是使用 API 模型还是本地 Transformers 模型
         self.api_model:str = "gpt-4o" # API 模型的名称，例如 "gpt-4o"
-        self.api_key:str = "sk-hfyQZDWdgyc4oQnDw4nvOh6KT1iDQ5EbNy9UjQwnMzBntefe" # 你的 OpenAI 或兼容 API 的密钥
+        self.api_key:str = "your-key" # 你的 OpenAI 或兼容 API 的密钥
         self.base_url:str = "https://yunwu.ai/v1" # API 的 base_url
         self.api_temperature = 0.7 # API 调用的温度参数
         self.api_top_p=0.9
