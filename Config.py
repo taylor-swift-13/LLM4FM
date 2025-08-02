@@ -12,7 +12,7 @@ class Config:
 
         # 本地 Transformers 模型的配置
         self.local_model_name:str = "Qwen/Qwen3-0.6B" # 本地模型的名称
-        self.fine_tuned_adapter:str = "./qwen3_alpaca_acsl_finetuned_results/final_adapters"
+        self.fine_tuned_adapter:str = "./fine_tuned_models"
         self.local_temperature = 0.7
         self.local_top_p=0.9
 

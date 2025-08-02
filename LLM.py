@@ -5,7 +5,6 @@ import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
 from Config import Config
 from abc import ABC, abstractmethod # 导入 ABC 和 abstractmethod 用于创建抽象基类
-from FineTune import FineTuner
 
 
 os.environ['HF_ENDPOINT'] = 'https://hf-mirror.com'
@@ -104,16 +103,19 @@ class HuggingFaceLLM(BaseChatModel):
         if not config.fine_tune:
             print(f"正在加载本地模型: {self.model_name}")
             self.tokenizer = AutoTokenizer.from_pretrained(self.model_name)
-            self.model = AutoModelForCausalLM.from_pretrained(self.model_name).to(self.device)
+            self.model = AutoModelForCausalLM.from_pretrained(
+                self.model_name,
+                torch_dtype=torch.bfloat16
+                ).to(self.device)
             print("本地模型加载完成。")
         else:
             print(f"正在加载微调模型: {self.model_name} {self.fine_tuned_adapter}")
-            self.model, self.tokenizer = FineTuner.load_fine_tuned_model(
-                model_name=self.model_name,
-                peft_model_path=self.fine_tuned_adapter,
-            )
-            # 确保微调模型也移动到指定设备
-            self.model = self.model.to(self.device)
+           
+            self.tokenizer = AutoTokenizer.from_pretrained(self.fine_tuned_adapter)
+            self.model = AutoModelForCausalLM.from_pretrained(
+                self.fine_tuned_adapter,
+                torch_dtype=torch.bfloat16
+            ).to(self.device)
             print("微调模型加载完成。")
 
     
